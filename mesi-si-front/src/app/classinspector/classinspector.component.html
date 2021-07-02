@@ -1,0 +1,68 @@
+<form *ngIf='selectedNode' (ngSubmit)='onCommitForm()'>
+    <p>Key <input style="display: inline;" name='key' disabled [(ngModel)]='data.key' /></p>
+    <p>Name <input style="display: inline;" name='name' [(ngModel)]='data.name' /></p>
+  
+    <div *ngIf="data.properties">
+    <p>Properties </p> 
+    <li *ngFor="let prop of data.properties">
+    <span>{{ prop.visibility}} {{prop.type}} {{prop.name}}</span> <button (click)="removeProperty(prop.__gohashid)">Delete</button>
+    </li>
+    </div>
+  
+    <div *ngIf="data.methods">
+    <p>Methods </p> 
+    <li *ngFor="let meth of data.methods">
+      <span>{{ meth.visibility}} {{meth.type}} {{meth.name}}</span> <button (click)="removeMethod(meth.__gohashid)">Delete</button>
+      <p>Parameters </p> 
+      <div  *ngIf='meth.parameters'>
+        <li *ngFor="let param of meth.parameters">{{ param.type}} {{ param.name }}</li>
+      </div>
+    </div>
+  
+    <button type="submit">Commit</button>
+  </form>
+  
+  <div *ngIf='!selectedNode'>
+    Select a Node to use Inspector
+  </div>
+  
+  <div *ngIf='selectedNode'>
+  <form>
+    <p>Create property</p>
+    <label>Scope</label><select [(ngModel)]="newProperty.visibility" name="vis">
+      <option [ngValue]="vis" *ngFor="let vis of visibilityTypes">{{vis}} </option>
+  </select>
+  <br>
+    <label>Type <input type="text" [(ngModel)]="newProperty.type" name="tip"></label> 
+  <br>
+    <label>Name <input type="text" [(ngModel)]="newProperty.name" name="ime"></label> 
+  
+  
+    <button (click)="addProperty(newProperty)">Add</button>
+  </form>
+  
+  
+  <form>
+    <p>Create method</p>
+    <label>Scope <select [(ngModel)]="newMethod.visibility" name="visMetode">
+      <option [ngValue]="vis" *ngFor="let vis of visibilityTypes">{{vis}} </option>
+  </select></label>
+  <br>
+  <label> Type<input type="text" [(ngModel)]="newMethod.type" name="tipMetode"></label>
+  <br>
+    <label>Name <input type="text" [(ngModel)]="newMethod.name" name="imeMetode"></label>
+  
+  
+    <button (click)="addMethod(newMethod)">Add</button>
+  </form>
+  
+  
+  <form>
+    <p>Create parameter</p>
+    <label> Type<input type="text" [(ngModel)]="newParameter.type" name="tipParametra"></label>
+    <br>
+      <label>Name <input type="text" [(ngModel)]="newParameter.name" name="imeParametra"></label>
+      <button (click)="addParameter(newParameter)">Add</button>
+    </form>
+  
+  </div>

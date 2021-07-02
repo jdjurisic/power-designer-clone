@@ -1,0 +1,39 @@
+<div class="container-fluid">
+<h2 *ngIf="showTree" > Users team: {{currentTeam.name}}</h2>
+
+<div class="row">
+<div class="col-sm-3" style="background-color:lavender;">
+<app-tree *ngIf="showTree" [projects]="currentTeam.projects"  (sendModel)="getModelFromTree($event)">Loading</app-tree>
+</div>
+
+<div class="col-sm-9" style="background-color:lavenderblush;">
+<app-rqm-table *ngIf="showRqmModelTable" [rqmDocument]="rqmDocument" [model]="model" [currentTeam]="currentTeam"> :) </app-rqm-table>  
+<app-usecase-editor *ngIf="showUseCaseModelTable" [useCaseDocument]="useCaseDocument" [model]="model"></app-usecase-editor>
+<app-classmodel-editor *ngIf="showClassModelTable" [classDocument]="classDocument" [model]="model"></app-classmodel-editor>
+</div>
+
+
+
+<!-- <div *ngIf="showProjectChooser">
+    <div>
+    <label>Project :</label>
+    <select name="projectMain" [(ngModel)]="selectedProjectId">
+        <option *ngFor="let project of projects" [value]="project.id">{{project.name}}</option>
+    </select>
+    </div>
+    <button (click)="selectProject()" class="btn btn-info">Choose project </button>
+</div> -->
+
+<!-- <div *ngIf="showModelChooser">
+    <div>
+    <label>Models :</label>
+    <select name="modelMain" [(ngModel)]="selectedModelId">
+       <option *ngFor="let model of models" [value]="model.id">{{model.name}}</option>
+    </select>
+    <div>
+    <button (click)="selectModel()" class="btn btn-info">Choose model </button>
+</div> -->
+
+</div>
+
+</div>

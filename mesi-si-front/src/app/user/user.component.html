@@ -1,0 +1,188 @@
+<div class="container">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>User Type</th>
+                <th>Team</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr *ngFor="let user of users">
+                <td>{{ user.username}}</td>
+                <td>{{ user.userType }}</td>
+                <td *ngIf="user.team == null "></td>
+                <td *ngIf="user.team != null ">{{ user.team.name}}</td>
+                <!-- <td> {{ user.team.name}}</td> -->
+
+                <div class="row">
+                    <td>
+
+                        <button [disabled]="isUser" (click)="updateUser1(user.id)" class="btn btn-info">Update </button>
+                        <button [disabled]="isUser" (click)="deleteUser(user.id)" class="btn btn-danger" style="margin-left: 10px;">Delete</button>
+                        <button (click)="addUserToTeam(user.id)" class="btn btn-warning" style="margin-left: 10px;">Add To Team </button>
+
+
+                    </td>
+                </div>
+            </tr>
+        </tbody>
+    </table>
+
+    <div>
+        <label>Teams :</label>
+
+        <select name="team" [(ngModel)]="selectedTeamID">
+           <option *ngFor="let team of teams" [value]="team.id">{{team.name}}</option>
+       </select>
+    </div>
+    <div>
+        <label>Projects :</label>
+        <select name="project" [(ngModel)]="selectedProjectId">
+           <option *ngFor="let project of projects" [value]="project.id">{{project.name}} - {{project.team.name}}</option>
+       </select>
+    </div>
+ 
+
+    <div class="row">
+        <td>
+        <button *ngIf="!isUser" (click)="showNewUserForm()" class="btn"> Create User </button>
+        <button *ngIf="!isUser" (click)="showNewTeamForm()" class="btn" style="margin-left: 10px;"> Create Team </button>
+        <button *ngIf="!isUser" (click)="showNewProjectForm()" class="btn" style="margin-left: 10px;"> Create Project </button>
+        <button *ngIf="!isUser" (click)="showNewModelForm()" class="btn" style="margin-left: 10px;"> Create Model </button>
+        </td>
+    </div>
+    <div class="col-md-9 offset-md-3" *ngIf="isAdmin && newTeam">
+        <div class="col-7" id="block1">
+            <h3>Create Team</h3>
+            <form form name="teamForm" #teamForm="ngForm" (ngSubmit)="createTeam(teamForm)">
+                <div class="form-group">
+                    <label>Team name</label>
+                    <input type="text" class="form-control" id="name" [(ngModel)]="team.name" name="name" required>
+                </div>
+                <button class="btn btn-success" type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="col-md-9 offset-md-3" *ngIf="isAdmin && newProject">
+        <div class="col-7" id="block1">
+            <h3>Create Project</h3>
+            <form form name="projectForm" #projectForm="ngForm" (ngSubmit)="createProject(projectForm)">
+                <div class="form-group">
+                    <label>Project name</label>
+                    <input type="text" class="form-control" id="name" [(ngModel)]="project.name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label>Select team for project</label>
+                    <select name="team" [(ngModel)]="selectedTeamId">
+                       <option *ngFor="let team of teams" [value]="team.id">{{team.name}}</option>
+                   </select>
+                </div>
+                <button class="btn btn-success" type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="col-md-9 offset-md-3" *ngIf="isAdmin && newModel">
+        <div class="col-7" id="block1">
+            <h3>Create Model</h3>
+            <form form name="modelForm" #modelForm="ngForm" (ngSubmit)="createModel(modelForm)">
+                <div class="form-group">
+                    <label>Model name</label>
+                    <input type="text" class="form-control" id="name" [(ngModel)]="model.name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label>Select project for Model</label>
+                    <select name="project" [(ngModel)]="selectedProjectForModelId">
+                       <option *ngFor="let project of projects" [value]="project.id">{{project.name}}</option>
+                   </select>
+                </div>
+                <div class="form-group">
+                    <label>Select type of model</label>
+                    <select name="modelType" [(ngModel)]="selectedModelType">
+                       <option *ngFor="let modelType of modelTypes" [value]="modelType">{{TypeLabel.get(modelType)}}</option>
+                   </select>
+                </div>
+                <button class="btn btn-success" type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="col-md-9 offset-md-3" *ngIf="isAdmin && newUser">
+        <div class="col-7" id="block1">
+            <h3>Create User</h3>
+            <form form name="userForm" #userForm="ngForm" (ngSubmit)="createUser(userForm)">
+                <div class="form-group">
+                    <label>Username</label>
+                    <input type="text" class="form-control" id="username" [(ngModel)]="user.username" name="username" required>
+                    <!-- <small *ngIf="username.touched">username required</small> -->
+
+                </div>
+
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" class="form-control" id="password" [(ngModel)]="user.password" name="password" required>
+
+                </div>
+
+                <div class="form-group">
+                    <label>User Type</label>
+                    <!-- <input type="text" class="form-control" id="type" [(ngModel)]="user.userType" name="type" required> -->
+                    <select name="type" [(ngModel)]="selectedType">
+                       <option *ngFor="let type of types" [value]="type">{{type}}</option>
+                   </select>
+                </div>
+
+                <button class="btn btn-success" type="submit">Submit</button>
+
+            </form>
+
+        </div>
+    </div>
+
+    <div class="col-md-9 offset-md-3" *ngIf="updateB">
+        <div *ngIf="isAdmin">
+            <div class="col-7" id="block1">
+                <h3>Update User</h3>
+                <form form (ngSubmit)="updateUser()">
+                    <div class="form-group">
+                        <label>Username</label>
+                        <input type="text" class="form-control" id="username" [(ngModel)]="userU.username" name="username" required>
+                        <!-- <small *ngIf="username.touched">username required</small> -->
+
+                    </div>
+
+
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" class="form-control" id="password" [(ngModel)]="userU.password" name="password" required>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label>User Type</label>
+                        <!-- <input type="text" class="form-control" id="type" [(ngModel)]="user.userType" name="type" required> -->
+                        <select name="type" [(ngModel)]="selectedTypeU">
+                       <option *ngFor="let type of types" [value]="type">{{type}}</option>
+                   </select>
+                    </div>
+
+                    <button class="btn btn-success" type="submit">Submit</button>
+
+                </form>
+
+            </div>
+        </div>
+
+
+
+    </div>
+
+
+
+
+
+</div>

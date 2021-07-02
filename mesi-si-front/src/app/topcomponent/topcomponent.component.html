@@ -1,0 +1,15 @@
+<nav class="nnavbar navbar-expand-lg navbar-light bg-light" style=" background-color: paleturquoise; " *ngIf="isLoggedIn$ | async as isLoggedIn ">
+
+    {{type}} {{username}}
+
+    <div class="navigacija">
+        <a *ngFor="let route of routes" [routerLink]="route.url">{{route.linkName}}</a>
+
+    </div>
+
+    <button type="button " class="btn btn-outline-secondary " (click)="onLogout() " *ngIf="isLoggedIn ">Log out</button>
+
+
+
+
+</nav>

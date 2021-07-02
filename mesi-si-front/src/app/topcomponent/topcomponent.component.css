@@ -1,0 +1,15 @@
+.navbar navbar-light {
+    text-align: right;
+}
+
+.btn btn-outline-secondary {
+    float: right;
+}
+
+.navigacija {
+    text-align: right;
+}
+
+.navigacija>a {
+    margin: 10px;
+}

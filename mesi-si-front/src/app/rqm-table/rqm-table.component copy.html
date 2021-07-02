@@ -1,0 +1,171 @@
+<div class="card">
+  <h3 class="card-header text-center font-weight-bold text-uppercase py-4">Requirement Model</h3> <!-- - {{selectedRequirement.name}}-->
+  <div class="card-body">
+    <div id="table" class="table-editable">
+      <table class="table table-bordered table-responsive-md table-striped text-center">
+        <tr>
+          <th class="text-center">Id</th>
+          <th class="text-center">Indentation</th>
+          <th class="text-center">Description</th>
+          <th class="text-center">Type</th>
+          <th class="text-center">Priority</th>
+          <th class="text-center">Risk</th>
+          <th class="text-center">Users</th>
+          <th class="text-center">Remove</th>
+          <th class="text-center">Add</th>
+        </tr>
+        <ng-container *ngFor="let rqm of rqmDocument.rqms; let id = index">
+          <tr>
+          <td>
+            <span (keyup)="changeValue(id, 'id', $event)" (blur)="updateList(id, 'id', $event)" contenteditable="true">{{id}}</span>
+          </td>
+          <td>
+            <span contenteditable="true" (keyup)="changeValue(id, 'indentation', $event)" (blur)="updateList(id, 'indentation', $event)">{{rqm.indentation}}</span>
+          </td>
+          <td>
+            <span contenteditable="true" (keyup)="changeValue(id, 'description', $event)" (blur)="updateList(id, 'description', $event)">{{rqm.description}}</span>
+          </td>
+          <td>
+            <select name="rqmMongoType" [(ngModel)]="rqmDocument.rqms[id].type">
+              <option *ngFor="let rqmMongoType of rqmMongoTypes" [value]="rqmMongoType">{{rqmMongoType}}</option>
+            </select>
+            <!--<span contenteditable="true" (keyup)="changeValue(id, 'type', $event)" (blur)="updateList(id, 'type', $event)">{{rqm.type}}</span>-->
+          </td>
+          <td>
+            <select name="rqmMongoPriority" [(ngModel)]="rqmDocument.rqms[id].priority">
+              <option *ngFor="let rqmMongoPriority of rqmMongoPriorities" [value]="rqmMongoPriority">{{rqmMongoPriority}}</option>
+            </select>
+            <!--<span contenteditable="true" (keyup)="changeValue(id, 'priority', $event)" (blur)="updateList(id, 'priority', $event)">{{rqm.priority}}</span>-->
+          </td>
+          <td>
+            <select name="rqmMongoRisk" [(ngModel)]="rqmDocument.rqms[id].risk">
+              <option *ngFor="let rqmMongoRisk of rqmMongoRisks" [value]="rqmMongoRisk">{{rqmMongoRisk}}</option>
+            </select>
+             <!--<span contenteditable="true" (keyup)="changeValue(id, 'risk', $event)" (blur)="updateList(id, 'risk', $event)">{{rqm.risk}}</span>-->
+          </td>
+          <td>
+            <select name="rqmMongoUser" >   <!--[(ngModel)]="rqmDocument.rqms[id].users"> -->
+              <option *ngFor="let rqmMongoUser of rqmMongoUsers" [value]="rqmMongoUser">{{rqmMongoUser}}</option>
+            </select>
+              <!--<span contenteditable="true" (keyup)="changeValue(id, 'users', $event)" (blur)="updateList(id, 'users', $event)">{{rqm.users}}</span>-->
+          </td>
+          <td>
+            <span class="table-remove">             
+              <button type="button" (click)="remove(id)" class="btn btn-danger" >Delete</button>
+            </span>
+          </td>
+          <td>
+            <span class="table-add">
+              <button type="button" (click)="addInner(id)" class="btn btn-warning" >Add</button>
+            </span>
+          </td>
+        </tr>
+    
+       
+        <ng-container *ngFor="let rqm of rqm.rqms; let idChild = index">
+          <tr>
+          <td>
+            <span (keyup)="changeValue(id, 'id', $event)" (blur)="updateListChild(idChild,id, 'id', $event)" contenteditable="true">{{id}}</span>
+          </td>
+          <td>
+            <span contenteditable="true" (keyup)="changeValue(id, 'indentation', $event)" (blur)="updateListChild(idChild, id, 'indentation', $event)">{{rqm.indentation}}</span>
+          </td>
+          <td>
+            <span contenteditable="true" (keyup)="changeValue(id, 'description', $event)" (blur)="updateListChild(idChild, id, 'description', $event)">{{rqm.description}}</span>
+          </td>
+          <td>
+            <select name="rqmMongoType" [(ngModel)]="rqmDocument.rqms[id].rqms[idChild].type">
+              <option *ngFor="let rqmMongoType of rqmMongoTypes" [value]="rqmMongoType">{{rqmMongoType}}</option>
+            </select>
+            <!--<span contenteditable="true" (keyup)="changeValue(id, 'type', $event)" (blur)="updateList(id, 'type', $event)">{{rqm.type}}</span>-->
+          </td>
+          <td>
+            <select name="rqmMongoPriority" [(ngModel)]="rqmDocument.rqms[id].rqms[idChild].priority">
+              <option *ngFor="let rqmMongoPriority of rqmMongoPriorities" [value]="rqmMongoPriority">{{rqmMongoPriority}}</option>
+            </select>
+            <!--<span contenteditable="true" (keyup)="changeValue(id, 'priority', $event)" (blur)="updateList(id, 'priority', $event)">{{rqm.priority}}</span>-->
+          </td>
+          <td>
+            <select name="rqmMongoRisk" [(ngModel)]="rqmDocument.rqms[id].rqms[idChild].risk">
+              <option *ngFor="let rqmMongoRisk of rqmMongoRisks" [value]="rqmMongoRisk">{{rqmMongoRisk}}</option>
+            </select>
+             <!--<span contenteditable="true" (keyup)="changeValue(id, 'risk', $event)" (blur)="updateList(id, 'risk', $event)">{{rqm.risk}}</span>-->
+          </td>
+          <td>
+            <select name="rqmMongoUser" >   <!--[(ngModel)]="rqmDocument.rqms[id].users"> -->
+              <option *ngFor="let rqmMongoUser of rqmMongoUsers" [value]="rqmMongoUser">{{rqmMongoUser}}</option>
+            </select>
+              <!--<span contenteditable="true" (keyup)="changeValue(id, 'users', $event)" (blur)="updateList(id, 'users', $event)">{{rqm.users}}</span>-->
+          </td>
+          <td>
+            <span class="table-remove">
+              <button type="button" (click)="removeChild(idChild, id)" class="btn btn-danger" >Delete</button>
+            </span>
+          </td>
+          <td>
+            <span class="table-add">
+              <button type="button" (click)="addInnerChild(idChild, id)" class="btn btn-warning" >Add</button>
+            </span>
+          </td>
+
+          </tr>
+          
+          <tr *ngFor="let rqm of rqm.rqms.rqms; let idChildChild = index">
+            <td>
+              <span (keyup)="changeValue(id, 'id', $event)" (blur)="updateListChildChild(idChildChild,idChild, id, 'id', $event)" contenteditable="true">{{id}}</span>
+            </td>
+            <td>
+              <span contenteditable="true" (keyup)="changeValue(id, 'indentation', $event)" (blur)="updateListChildChild(idChildChild,idChild, id, 'indentation', $event)">{{rqm.indentation}}</span>
+            </td>
+            <td>
+              <span contenteditable="true" (keyup)="changeValue(id, 'description', $event)" (blur)="updateListChildChild(idChildChild,idChild, id, 'description', $event)">{{rqm.description}}</span>
+            </td>
+            <td>
+              <select name="rqmMongoType" [(ngModel)]="rqmDocument.rqms[id].rqms[idChild].rqms[idChildChild].type">
+                <option *ngFor="let rqmMongoType of rqmMongoTypes" [value]="rqmMongoType">{{rqmMongoType}}</option>
+              </select>
+              <!--<span contenteditable="true" (keyup)="changeValue(id, 'type', $event)" (blur)="updateList(id, 'type', $event)">{{rqm.type}}</span>-->
+            </td>
+            <td>
+              <select name="rqmMongoPriority" [(ngModel)]="rqmDocument.rqms[id].rqms[idChild].rqms[idChildChild].priority">
+                <option *ngFor="let rqmMongoPriority of rqmMongoPriorities" [value]="rqmMongoPriority">{{rqmMongoPriority}}</option>
+              </select>
+              <!--<span contenteditable="true" (keyup)="changeValue(id, 'priority', $event)" (blur)="updateList(id, 'priority', $event)">{{rqm.priority}}</span>-->
+            </td>
+            <td>
+              <select name="rqmMongoRisk" [(ngModel)]="rqmDocument.rqms[id].rqms[idChild].rqms[idChildChild].risk">
+                <option *ngFor="let rqmMongoRisk of rqmMongoRisks" [value]="rqmMongoRisk">{{rqmMongoRisk}}</option>
+              </select>
+               <!--<span contenteditable="true" (keyup)="changeValue(id, 'risk', $event)" (blur)="updateList(id, 'risk', $event)">{{rqm.risk}}</span>-->
+            </td>
+            <td>
+              <select name="rqmMongoUser" >   <!--[(ngModel)]="rqmDocument.rqms[id].users"> -->
+                <option *ngFor="let rqmMongoUser of rqmMongoUsers" [value]="rqmMongoUser">{{rqmMongoUser}}</option>
+              </select>
+                <!--<span contenteditable="true" (keyup)="changeValue(id, 'users', $event)" (blur)="updateList(id, 'users', $event)">{{rqm.users}}</span>-->
+            </td>
+            <td>
+              <span class="table-remove">
+                <button type="button" (click)="removeChild(idChild, id)" class="btn btn-danger" >Delete</button>
+              </span>
+            </td>
+            <td>
+              <span class="table-add">
+                <button type="button" (click)="addInnerChild(idChild, id)" class="btn btn-warning" >Add</button>
+              </span>
+            </td>
+
+          </tr>
+
+        </ng-container>
+      </ng-container>
+      </table>
+    </div>
+  </div>
+</div>
+<div>
+  <button type="button" (click)="saveRQM()" class="btn btn-info"  style="margin-left: 50px;">SAVE</button>
+</div>
+<div>
+  <button type="button" (click)="add()" class="btn btn-info"  style="margin-left: 50px;">ADD</button>
+</div>

@@ -1,0 +1,23 @@
+@media all and (min-width: 768px) {
+    tr td {
+        vertical-align: middle !important;
+   }
+    tr span:not([class]) {
+        padding: 1rem 1rem;
+   }
+}
+.save-failed {
+    text-align: center;
+    margin: auto;
+    margin-top: 10px;
+    border: 2px solid black;
+    width: 65%;
+    background-color: red;
+}
+
+.save-failed-text {
+    text-align: center;
+    margin-top: 5px;
+    font-weight: bold;
+    color: aliceblue;
+}
